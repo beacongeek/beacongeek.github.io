@@ -1,0 +1,469 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=IBM+Plex+Mono:wght@300;400;500;700&display=swap');
+
+/* ================================================================
+   GREEN PHOSPHOR CRT IN A LOG CABIN — PHOTOREALISTIC SCENE
+   
+   The background image is a photograph of a log cabin desk.
+   The interactive CRT screen is an overlay positioned precisely
+   over the dark monitor screen in that photograph.
+   ================================================================ */
+
+:root {
+  --bg: #0a1210;
+  --green: #33ff66;
+  --text: #b0ffc0;
+  --dim: #1a9944;
+  --border: #0a3318;
+
+  /* ============================================================
+     SCREEN POSITION CALIBRATION
+     Adjust these values to align the overlay with the monitor
+     screen in bg-scene.png. All values are in viewport %.
+     ============================================================ */
+  --screen-top: 12%;
+  --screen-left: 15%;
+  --screen-width: 70%;
+  --screen-height: 75%;
+  /* Border radius matching the CRT bezel curve */
+  --screen-radius: 3.5% / 5%;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ----------------------------------------------------------------
+   HTML / BODY — lock to viewport
+   ---------------------------------------------------------------- */
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #050302;
+  font-family: 'IBM Plex Mono', monospace;
+  color: var(--text);
+}
+
+/* ----------------------------------------------------------------
+   PHOTOREALISTIC SCENE — cabin desk photograph
+   Uses object-fit: cover so the image always fills the viewport
+   regardless of aspect ratio mismatch.
+   ---------------------------------------------------------------- */
+.scene-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Green light cast by the CRT screen onto the desk and room */
+.screen-glow {
+  position: fixed;
+  z-index: 1;
+  top: var(--screen-top);
+  left: var(--screen-left);
+  width: var(--screen-width);
+  height: var(--screen-height);
+  pointer-events: none;
+  /* Glow extends outward from the screen edges */
+  background: radial-gradient(ellipse 160% 160% at 50% 50%,
+      rgba(51, 255, 102, 0.06) 0%,
+      rgba(51, 255, 102, 0.03) 40%,
+      transparent 70%);
+  mix-blend-mode: screen;
+  filter: blur(30px);
+}
+
+/* ----------------------------------------------------------------
+   THE INTERACTIVE CRT SCREEN OVERLAY
+   Positioned to sit exactly over the dark screen area
+   in the background photograph.
+   ---------------------------------------------------------------- */
+.crt-frame {
+  position: fixed;
+  z-index: 10;
+  top: var(--screen-top);
+  left: var(--screen-left);
+  width: var(--screen-width);
+  height: var(--screen-height);
+  background: var(--bg);
+  border-radius: var(--screen-radius);
+  overflow: hidden;
+
+  /* Apply 3D perspective to match the angled monitor */
+  transform: perspective(1200px) rotateY(29deg) rotateX(7deg);
+  transform-style: preserve-3d;
+  transform-origin: center left;
+
+  /* Deep inner shadow = spherical glass tube bulge */
+  box-shadow:
+    inset 0 0 60px 20px rgba(0, 0, 0, 0.95),
+    inset 0 0 25px 6px rgba(51, 255, 102, 0.08);
+}
+
+/* ----------------------------------------------------------------
+   SPHERICAL VIGNETTE — aggressive curved glass illusion
+   Bright open center, very dark crushed edges
+   ---------------------------------------------------------------- */
+.crt-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  border-radius: inherit;
+  background:
+    radial-gradient(ellipse 72% 68% at 50% 50%,
+      transparent 0%,
+      transparent 45%,
+      rgba(0, 0, 0, 0.12) 58%,
+      rgba(0, 0, 0, 0.35) 70%,
+      rgba(0, 0, 0, 0.65) 82%,
+      rgba(0, 0, 0, 0.92) 95%,
+      rgba(0, 0, 0, 1) 100%);
+}
+
+/* ----------------------------------------------------------------
+   SCANLINES — thin, soft, authentic phosphor look
+   ---------------------------------------------------------------- */
+.crt-scanlines {
+  position: absolute;
+  inset: 0;
+  z-index: 50;
+  pointer-events: none;
+  border-radius: inherit;
+  background:
+    repeating-linear-gradient(to bottom,
+      transparent 0px,
+      transparent 2px,
+      rgba(0, 0, 0, 0.1) 2px,
+      rgba(0, 0, 0, 0.1) 3px);
+  opacity: 0.75;
+}
+
+/* Rolling vertical refresh bar */
+.crt-scanlines::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(to bottom,
+      transparent 0%,
+      rgba(51, 255, 102, 0.025) 48%,
+      rgba(51, 255, 102, 0.05) 50%,
+      rgba(51, 255, 102, 0.025) 52%,
+      transparent 100%);
+  background-size: 100% 250%;
+  animation: refresh-sweep 5s linear infinite;
+}
+
+/* ----------------------------------------------------------------
+   GLASS GLARE — reflections that match the scene lighting
+   Banker's lamp is to the RIGHT, starlight window is upper-LEFT
+   ---------------------------------------------------------------- */
+.crt-glass {
+  position: absolute;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  border-radius: inherit;
+  background:
+    /* Banker's lamp warm reflection — right side of screen */
+    radial-gradient(ellipse 40% 50% at 82% 35%,
+      rgba(255, 210, 130, 0.14) 0%,
+      rgba(255, 200, 100, 0.05) 30%,
+      transparent 60%),
+    /* Starlight / window ambient — upper-left of screen */
+    radial-gradient(ellipse 35% 30% at 15% 12%,
+      rgba(180, 200, 255, 0.08) 0%,
+      rgba(180, 200, 255, 0.02) 30%,
+      transparent 55%),
+    /* Gentle diagonal glare sweep across the glass */
+    linear-gradient(125deg,
+      rgba(255, 255, 255, 0.05) 0%,
+      transparent 15%,
+      transparent 85%,
+      rgba(255, 220, 160, 0.04) 100%),
+    /* Convex lens — darkens edges for glass depth */
+    radial-gradient(ellipse at 50% 50%,
+      transparent 40%,
+      rgba(0, 0, 0, 0.1) 65%,
+      rgba(0, 0, 0, 0.25) 100%);
+}
+
+/* ----------------------------------------------------------------
+   SCROLLABLE CONTENT — the interactive terminal inside the CRT
+   ---------------------------------------------------------------- */
+.crt-content {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  z-index: 5;
+  /* Soft phosphor bloom on ALL text */
+  text-shadow:
+    0 0 8px rgba(51, 255, 102, 0.7),
+    0 0 16px rgba(51, 255, 102, 0.25);
+  animation: crt-flicker 0.15s infinite;
+}
+
+/* ================================================================
+   CONTENT STYLES INSIDE THE CRT SCREEN
+   ================================================================ */
+
+#site-header {
+  border-bottom: 2px solid var(--border);
+  padding: 16px 20px;
+  background: rgba(4, 10, 6, 0.97);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  text-align: center;
+}
+
+#site-header h1 {
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  font-size: clamp(0.75rem, 1.8vw, 1.2rem);
+  letter-spacing: 3px;
+  color: var(--green);
+  text-shadow:
+    0 0 10px rgba(51, 255, 102, 0.95),
+    0 0 30px rgba(51, 255, 102, 0.45),
+    0 0 60px rgba(51, 255, 102, 0.15);
+}
+
+#site-header p {
+  color: var(--dim);
+  margin-top: 5px;
+  font-size: clamp(0.55rem, 1vw, 0.7rem);
+  letter-spacing: 0.8px;
+}
+
+.layout {
+  display: flex;
+  min-height: 100%;
+}
+
+
+
+/* ----------------------------------------------------------------
+   MAIN CONTENT AREA
+   ---------------------------------------------------------------- */
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  align-items: center;
+}
+
+.content-panel {
+  padding: 24px;
+  width: 100%;
+  max-width: 800px;
+  line-height: 1.65;
+  font-size: clamp(0.6rem, 1vw, 0.78rem);
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 100px);
+}
+
+#content {
+  flex: 1;
+}
+
+#command-prompt {
+  margin-top: 30px;
+  border-top: 1px dashed var(--border);
+  padding-top: 15px;
+  display: flex;
+  align-items: center;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: clamp(0.7rem, 1.2vw, 0.9rem);
+  color: var(--green);
+}
+
+.prompt-symbol {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+#cmd-input {
+  background: transparent;
+  border: none;
+  color: var(--text);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: inherit;
+  flex: 1;
+  outline: none;
+  text-shadow:
+    0 0 8px rgba(51, 255, 102, 0.7),
+    0 0 16px rgba(51, 255, 102, 0.25);
+}
+
+.content-panel h1,
+.content-panel h2,
+.content-panel h3 {
+  font-family: 'Cinzel', serif;
+  color: var(--green);
+  text-shadow:
+    0 0 6px rgba(51, 255, 102, 0.85),
+    0 0 14px rgba(51, 255, 102, 0.3);
+  margin-top: 22px;
+  margin-bottom: 10px;
+}
+
+.content-panel h1 {
+  border-bottom: 2px solid var(--border);
+  padding-bottom: 7px;
+  font-size: clamp(0.85rem, 1.6vw, 1.3rem);
+  letter-spacing: 1.5px;
+}
+
+.content-panel h2 {
+  font-size: clamp(0.72rem, 1.2vw, 1rem);
+  letter-spacing: 0.8px;
+}
+
+.content-panel ul {
+  padding-left: 16px;
+}
+
+.content-panel li {
+  margin: 4px 0;
+}
+
+blockquote {
+  border-left: 3px solid var(--green);
+  padding: 10px 16px;
+  color: #c0ffd0;
+  margin: 22px 0;
+  font-style: italic;
+  background: rgba(51, 255, 102, 0.03);
+  box-shadow: inset 4px 0 8px rgba(0, 0, 0, 0.5);
+}
+
+code {
+  background: #040d06;
+  color: #a0ffc0;
+  padding: 2px 5px;
+  font-family: 'IBM Plex Mono', monospace;
+  border: 1px solid #0a3318;
+  font-size: 0.85em;
+}
+
+pre {
+  background: #020604;
+  padding: 16px;
+  overflow-x: auto;
+  border: 2px solid var(--border);
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.95);
+}
+
+a {
+  color: var(--green);
+  transition: all 0.2s ease;
+}
+
+a:hover {
+  color: #c0ffd0;
+  text-shadow: 0 0 5px rgba(51, 255, 102, 0.8);
+}
+
+/* Scrollbar */
+.crt-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.crt-content::-webkit-scrollbar-track {
+  background: #020604;
+}
+
+.crt-content::-webkit-scrollbar-thumb {
+  background: var(--border);
+}
+
+.crt-content::-webkit-scrollbar-thumb:hover {
+  background: var(--green);
+}
+
+/* ================================================================
+   ANIMATIONS
+   ================================================================ */
+
+@keyframes crt-flicker {
+  0% {
+    opacity: 0.994;
+  }
+
+  25% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.997;
+  }
+
+  75% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.995;
+  }
+}
+
+@keyframes refresh-sweep {
+  0% {
+    background-position: 0 -100%;
+  }
+
+  100% {
+    background-position: 0 250%;
+  }
+}
+
+/* ================================================================
+   RESPONSIVE — small screens go full-bleed terminal
+   ================================================================ */
+@media (max-width: 900px) {
+
+  .scene-bg,
+  .screen-glow {
+    display: none;
+  }
+
+  body {
+    background: var(--bg);
+    overflow: auto;
+  }
+
+  .crt-frame {
+    position: relative;
+    top: unset;
+    left: unset;
+    width: 100%;
+    height: auto;
+    min-height: 100vh;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .crt-content {
+    position: relative;
+    overflow: visible;
+  }
+
+  .crt-vignette {
+    display: none;
+  }
+
+  .layout {
+    flex-direction: column;
+  }
+}

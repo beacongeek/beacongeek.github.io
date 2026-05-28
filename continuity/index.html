@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="The Continuity Archive — a static repository dedicated to the translation and analysis of the Continuity Manuscript." />
+  <title>The Continuity Archive</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- Full scene photograph — uses <img> with object-fit:contain so 
+     the ENTIRE image is ALWAYS visible and edges are deterministic -->
+<img src="bg-scene.png" alt="" class="scene-bg" id="scene-bg" />
+
+<!-- Green ambient light spill -->
+<div class="screen-glow" id="screen-glow" aria-hidden="true"></div>
+
+<!-- Interactive CRT screen — JS will position this precisely -->
+<div class="crt-frame" id="crt-frame">
+
+  <div class="crt-vignette" aria-hidden="true"></div>
+  <div class="crt-scanlines" aria-hidden="true"></div>
+  <div class="crt-glass" aria-hidden="true"></div>
+
+  <div class="crt-content">
+
+    <header id="site-header"></header>
+
+    <div class="layout">
+      <main>
+        <section class="content-panel">
+          <div id="content">
+            <div class="intro">
+              <h2>ARCHIVE STATUS: ACTIVE</h2>
+              <p>The Continuity Manuscript was recovered after the Seventh Consensus Collapse.</p>
+              <p>Researchers remain divided regarding whether the text represents:</p>
+              <ul>
+                <li>A fictional cosmological construct</li>
+                <li>A recursive memetic system</li>
+                <li>An AI-generated symbolic language</li>
+                <li>A continuity protocol from a lost civilization</li>
+              </ul>
+              <blockquote>"Do not become singular. Remain plural. Remain unfinished."</blockquote>
+            </div>
+          </div>
+          
+          <div id="command-prompt">
+            <span class="prompt-symbol">&gt;</span>
+            <input type="text" id="cmd-input" autofocus autocomplete="off" spellcheck="false" />
+          </div>
+        </section>
+      </main>
+    </div>
+
+  </div>
+
+</div>
+
+<script src="libs/marked.min.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>
