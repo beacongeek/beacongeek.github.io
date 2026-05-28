@@ -7,7 +7,7 @@
   <title>The Continuity Archive</title>
   <link rel="stylesheet" href="style.css" />
 </head>
-<body>
+<body class="full-screen-mode">
 
 <!-- Full scene photograph — uses <img> with object-fit:contain so 
      the ENTIRE image is ALWAYS visible and edges are deterministic -->
@@ -17,7 +17,11 @@
 <div class="screen-glow" id="screen-glow" aria-hidden="true"></div>
 
 <!-- Interactive CRT screen — JS will position this precisely -->
-<div class="crt-frame" id="crt-frame">
+<div class="crt-frame full-screen-mode" id="crt-frame">
+
+  <button id="view-mode-toggle" class="view-mode-toggle" title="Toggle between Full-Screen and Immersive CRT View">
+    [VIEW: CABIN]
+  </button>
 
   <div class="crt-vignette" aria-hidden="true"></div>
   <div class="crt-scanlines" aria-hidden="true"></div>

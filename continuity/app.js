@@ -99,6 +99,41 @@ function processCommand(cmd) {
 
 document.addEventListener('DOMContentLoaded', () => {
   loadHeader();
+
+  // --- View Mode (Fullscreen vs Immersive) Initialization ---
+  const crtFrame = document.getElementById('crt-frame');
+  const viewModeToggle = document.getElementById('view-mode-toggle');
+  const storedMode = localStorage.getItem('crt-view-mode');
+
+  // Default to fullscreen mode. If stored preference is 'immersive', adjust.
+  if (storedMode === 'immersive') {
+    if (crtFrame) crtFrame.classList.remove('full-screen-mode');
+    document.body.classList.remove('full-screen-mode');
+    if (viewModeToggle) viewModeToggle.textContent = '[VIEW: FULLSCREEN]';
+    calibrateScreen();
+  } else {
+    if (crtFrame) crtFrame.classList.add('full-screen-mode');
+    document.body.classList.add('full-screen-mode');
+    if (viewModeToggle) viewModeToggle.textContent = '[VIEW: CABIN]';
+  }
+
+  if (viewModeToggle) {
+    viewModeToggle.addEventListener('click', () => {
+      const isFullscreen = crtFrame.classList.contains('full-screen-mode');
+      if (isFullscreen) {
+        crtFrame.classList.remove('full-screen-mode');
+        document.body.classList.remove('full-screen-mode');
+        viewModeToggle.textContent = '[VIEW: FULLSCREEN]';
+        localStorage.setItem('crt-view-mode', 'immersive');
+        calibrateScreen();
+      } else {
+        crtFrame.classList.add('full-screen-mode');
+        document.body.classList.add('full-screen-mode');
+        viewModeToggle.textContent = '[VIEW: CABIN]';
+        localStorage.setItem('crt-view-mode', 'fullscreen');
+      }
+    });
+  }
   
   const cmdInput = document.getElementById('cmd-input');
   if (cmdInput) {
@@ -178,6 +213,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // --- Screen Calibration for object-fit: contain ---
 function calibrateScreen() {
+  const crtFrame = document.getElementById('crt-frame');
+  if (crtFrame && crtFrame.classList.contains('full-screen-mode')) {
+    return;
+  }
+
   const img = document.getElementById('scene-bg');
   if (!img || !img.naturalWidth) return;
 
