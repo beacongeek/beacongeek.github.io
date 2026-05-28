@@ -130,6 +130,50 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
   });
+
+  // --- Image Lightbox Event Handler (Event Delegation) ---
+  const imageModal = document.getElementById('image-modal');
+  const modalImg = document.getElementById('modal-img');
+  const modalCaption = document.getElementById('modal-caption');
+  const modalClose = document.getElementById('modal-close');
+
+  const contentEl = document.getElementById('content');
+  if (contentEl && imageModal && modalImg) {
+    contentEl.addEventListener('click', (e) => {
+      const target = e.target;
+      if (target.tagName === 'IMG') {
+        modalImg.src = target.src;
+        modalImg.alt = target.alt;
+        if (modalCaption) {
+          modalCaption.textContent = target.alt || target.title || "IMAGE DECRYPTED";
+        }
+        imageModal.style.display = 'flex';
+      }
+    });
+  }
+
+  if (modalClose && imageModal) {
+    modalClose.addEventListener('click', () => {
+      imageModal.style.display = 'none';
+      if (modalImg) modalImg.src = '';
+    });
+  }
+
+  if (imageModal) {
+    imageModal.addEventListener('click', (e) => {
+      if (e.target === imageModal || e.target.classList.contains('modal-wrapper')) {
+        imageModal.style.display = 'none';
+        if (modalImg) modalImg.src = '';
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && imageModal.style.display === 'flex') {
+        imageModal.style.display = 'none';
+        if (modalImg) modalImg.src = '';
+      }
+    });
+  }
 });
 
 // --- Screen Calibration for object-fit: contain ---

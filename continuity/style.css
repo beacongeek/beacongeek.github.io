@@ -469,3 +469,98 @@ a:hover {
     flex-direction: column;
   }
 }
+
+/* Inline content images */
+.content-panel img {
+  max-width: 100%;
+  height: auto;
+  margin: 20px auto;
+  display: block;
+  border: 1px solid var(--border);
+  box-shadow: 0 0 8px rgba(51, 255, 102, 0.15);
+  cursor: zoom-in;
+  transition: all 0.25s ease;
+  filter: grayscale(100%) sepia(100%) hue-rotate(90deg) saturate(250%) contrast(110%) brightness(95%);
+}
+
+.content-panel img:hover {
+  border-color: var(--green);
+  box-shadow: 0 0 20px rgba(51, 255, 102, 0.35);
+  filter: grayscale(80%) sepia(100%) hue-rotate(90deg) saturate(350%) contrast(125%) brightness(105%);
+}
+
+/* Lightbox modal for viewing images */
+.image-modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(4, 10, 6, 0.96);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  animation: modal-fade-in 0.25s ease-out;
+}
+
+@keyframes modal-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-close {
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  color: var(--green);
+  font-size: 2.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+  z-index: 110;
+  text-shadow: 0 0 8px rgba(51, 255, 102, 0.8);
+}
+
+.modal-close:hover {
+  color: #c0ffd0;
+  text-shadow: 0 0 15px rgba(51, 255, 102, 1);
+  transform: scale(1.1);
+}
+
+.modal-wrapper {
+  max-width: 90%;
+  max-height: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border: 2px solid var(--green);
+  box-shadow: 0 0 30px rgba(51, 255, 102, 0.3);
+  background: #000;
+  filter: grayscale(100%) sepia(100%) hue-rotate(90deg) saturate(300%) contrast(120%) brightness(100%);
+  animation: modal-img-zoom 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes modal-img-zoom {
+  from { transform: scale(0.9); }
+  to { transform: scale(1); }
+}
+
+.modal-caption {
+  margin-top: 15px;
+  color: var(--green);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.9rem;
+  text-align: center;
+  letter-spacing: 1px;
+}

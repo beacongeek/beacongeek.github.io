@@ -32,4 +32,9 @@ During REM sleep, subjects display rapid eye movements corresponding to the geom
 
 Our minds are not designed for non-linear, multi-dimensional structures. The human brain tries to map a high-dimensional memetic signal onto a three-dimensional neural lattice, causing the system to loop in an attempt to compile the data.
 
+## ARCHIVE SCHEMA CAPTURE
+Below is a recovered high-dimensional projection schematic of the recursion loop behavior observed in Phase 2:
+
+![Lattice Blueprint Schema: Recovered from Node 0x7F](content/recursion_lattice.png)
+
 `RECOMMENDED PROTOCOL: Rotate researchers every 4 hours. Under no circumstances should any individual attempt to read the entire manuscript in a single session.`
