@@ -204,6 +204,8 @@ body {
   overflow-y: auto;
   overflow-x: hidden;
   z-index: 5;
+  display: flex;
+  flex-direction: column;
   /* Soft phosphor bloom on ALL text */
   text-shadow:
     0 0 8px rgba(51, 255, 102, 0.7),
@@ -228,7 +230,7 @@ body {
 #site-header h1 {
   font-family: 'Cinzel', serif;
   font-weight: 700;
-  font-size: clamp(0.75rem, 1.8vw, 1.2rem);
+  font-size: clamp(1rem, 2.2vw, 1.5rem);
   letter-spacing: 3px;
   color: var(--green);
   text-shadow:
@@ -240,13 +242,13 @@ body {
 #site-header p {
   color: var(--dim);
   margin-top: 5px;
-  font-size: clamp(0.55rem, 1vw, 0.7rem);
+  font-size: clamp(0.75rem, 1.2vw, 0.95rem);
   letter-spacing: 0.8px;
 }
 
 .layout {
   display: flex;
-  min-height: 100%;
+  flex: 1 0 auto;
 }
 
 
@@ -267,10 +269,10 @@ main {
   width: 100%;
   max-width: 800px;
   line-height: 1.65;
-  font-size: clamp(0.6rem, 1vw, 0.78rem);
+  font-size: clamp(0.85rem, 1.2vw, 1.05rem);
   display: flex;
   flex-direction: column;
-  min-height: calc(100vh - 100px);
+  flex: 1 0 auto;
 }
 
 #content {
@@ -284,7 +286,7 @@ main {
   display: flex;
   align-items: center;
   font-family: 'IBM Plex Mono', monospace;
-  font-size: clamp(0.7rem, 1.2vw, 0.9rem);
+  font-size: clamp(0.9rem, 1.4vw, 1.15rem);
   color: var(--green);
 }
 
@@ -321,12 +323,12 @@ main {
 .content-panel h1 {
   border-bottom: 2px solid var(--border);
   padding-bottom: 7px;
-  font-size: clamp(0.85rem, 1.6vw, 1.3rem);
+  font-size: clamp(1.2rem, 2vw, 1.7rem);
   letter-spacing: 1.5px;
 }
 
 .content-panel h2 {
-  font-size: clamp(0.72rem, 1.2vw, 1rem);
+  font-size: clamp(1rem, 1.6vw, 1.35rem);
   letter-spacing: 0.8px;
 }
 

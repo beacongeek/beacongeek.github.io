@@ -44,8 +44,8 @@ async function loadMarkdown(path) {
       <div style="border: 2px dashed var(--green); padding: 20px; background: rgba(51,255,102,0.02); margin: 16px 0;">
         <h2 style="color: var(--green); margin-top: 0; font-family: 'Cinzel', serif; letter-spacing: 2px;">DATA STREAM INTERRUPTED</h2>
         <p>Error compiling node: <code>${path}</code></p>
-        <p style="color: var(--dim); font-size: 0.8rem; margin-top: 12px;">Diagnostic: ${error.message}</p>
-        <p style="color: var(--dim); font-size: 0.8rem;">Verify connection to hosting server or CORS protocols.</p>
+        <p style="color: var(--dim); font-size: 0.9rem; margin-top: 12px;">Diagnostic: ${error.message}</p>
+        <p style="color: var(--dim); font-size: 0.9rem;">Verify connection to hosting server or CORS protocols.</p>
       </div>
     `;
   }
@@ -101,6 +101,9 @@ document.addEventListener('DOMContentLoaded', () => {
   loadHeader();
   
   const cmdInput = document.getElementById('cmd-input');
+  if (cmdInput) {
+    cmdInput.focus({ preventScroll: true });
+  }
   
   cmdInput.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
